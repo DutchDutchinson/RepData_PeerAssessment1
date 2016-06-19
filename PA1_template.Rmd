@@ -8,7 +8,7 @@ output:
 
 ## Loading and preprocessing the data
 Here is where I load the data
-```{r}
+```{r, echo=TRUE}
 data <- read.csv('./activity/activity.csv')
 ```
 
@@ -17,7 +17,7 @@ data <- read.csv('./activity/activity.csv')
 The total amount of steps for each day is as follows:
 
 Here are all the steps for each day!
-```{r}
+```{r, echo=TRUE}
 totalsteps <- aggregate(data$steps, by = list(data$date), FUN=sum)
 colnames(totalsteps) <- c("Date", "steps")
 ##histogram
@@ -31,14 +31,15 @@ median(totalsteps$steps, na.rm = TRUE)
 ```
 
 ## What is the average daily activity pattern?
-```{r}
+Here is the average daily activity pattern.
+```{r, echo=TRUE}
 ts <- aggregate(data$steps, by = list(data$interval), FUN=mean, na.rm = TRUE)
 plot(ts$Group.1, ts$x, type="l", main = "Average Daily Activity Pattern", xlab = "Interval", ylab = "Average Steps")
 ts$Group.1[which.max(ts$x)]
 ```
 ## Imputing missing values
 Here are the total number of NAs
-```{r}
+```{r, echo=TRUE}
 sum(is.na(data$steps))
 imputedData <- transform(data, steps = ifelse(is.na(data$steps), ts$x[match(data$interval, ts$Group.1)], data$steps))
 
@@ -58,7 +59,7 @@ median(imputedtotalsteps$steps)
 ## Are there differences in activity patterns between weekdays and weekends?
 
 Here is the graph for Weekend vs. Weekday.
-```{r}
+```{r, echo=TRUE}
 library(lattice)
 weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", 
               "Friday")
